@@ -41,6 +41,7 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "noEmitOnError": false,
   },
 
   "include": ["src/**/*.ts"],
