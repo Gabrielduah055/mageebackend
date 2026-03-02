@@ -11,6 +11,7 @@ cloudinary.config({
 });
 
 export async function uploadImage(req: Request, res: Response): Promise<void> {
+  // multer adds `file` to the request; @types/multer augments Express.Multer.File
   const file = (req as Request & { file?: Express.Multer.File }).file;
 
   if (!file) {

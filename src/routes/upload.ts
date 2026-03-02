@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import type { Request } from 'express';
 import multer from 'multer';
 import { uploadImage } from '../controllers/uploadController.js';
 import { authenticate } from '../middleware/auth.js';
@@ -9,7 +10,7 @@ const storage = multer.memoryStorage();
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (_req, file, cb) => {
+  fileFilter: (_req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {
