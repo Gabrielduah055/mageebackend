@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { Booking } from '../models/booking.js';
 import { Service } from '../models/service.js';
+import { User } from '../models/users.js';
 
 export async function createBooking(req: Request, res: Response): Promise<void> {
   const { service_id, service_type, booking_date, booking_time, address, notes, image_url } = req.body as {
@@ -15,6 +16,13 @@ export async function createBooking(req: Request, res: Response): Promise<void> 
 
   if (!service_id || !service_type || !booking_date || !booking_time) {
     res.status(400).json({ error: 'service_id, service_type, booking_date, and booking_time are required' });
+    return;
+  }
+
+  // Require verified account to book
+  const booker = await User.findById(req.user!.id).select('isVerified');
+  if (!booker || !booker.isVerified) {
+    res.status(403).json({ error: 'Please verify your email before booking an appointment.' });
     return;
   }
 

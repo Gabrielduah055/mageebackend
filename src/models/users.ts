@@ -9,6 +9,9 @@ const userSchema = new Schema<IUser>(
       password_hash: { type: String, required: true },
       phone: { type: String, default: '' },
       role: { type: String, enum: ['user', 'admin'], default: 'user' },
+      isVerified: { type: Boolean, default: false },
+      otp: { type: String, default: null },
+      otpExpiry: { type: Date, default: null },
       created_at: { type: Date, default: Date.now },
     },
     {

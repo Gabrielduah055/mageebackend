@@ -17,6 +17,9 @@ import { getSettings, updateSettings } from '../controllers/settingsController.j
 
 const router = Router();
 
+// Public route — client landing page reads salon info without auth
+router.get('/settings/public', getSettings);
+
 router.use(authenticate, adminOnly);
 
 // Dashboard
