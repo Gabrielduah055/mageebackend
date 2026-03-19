@@ -9,6 +9,9 @@ export interface IUser {
     password_hash: string;
     phone?: string;
     role: 'user' | 'admin';
+    isVerified: boolean;
+    otp?: string | null;
+    otpExpiry?: Date | null;
     created_at: Date;
 }
 
