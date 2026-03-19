@@ -129,7 +129,7 @@ export async function getClients(_req: Request, res: Response): Promise<void> {
           .sort({ booking_date: -1 });
 
         const totalSpent = bookings.reduce((sum: number, b: any) => sum + (b.service?.price ?? 0), 0);
-        const lastVisit = bookings.length > 0 ? bookings[0].booking_date : null;
+        const lastVisit = bookings[0]?.booking_date ?? null;
 
         return {
           _id: user._id,
