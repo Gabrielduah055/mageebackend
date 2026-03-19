@@ -6,6 +6,7 @@ const serviceSchema = new Schema<IService>(
     {
       name: { type: String, required: true },
       description: { type: String },
+      category: { type: String, default: '' },
       price: { type: Number, required: true },
       duration_minutes: { type: Number, required: true },
       created_at: { type: Date, default: Date.now },
