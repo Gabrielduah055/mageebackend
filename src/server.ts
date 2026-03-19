@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.js';
 import servicesRoutes from './routes/services.js';
 import bookingsRoutes from './routes/bookings.js';
 import uploadRoutes from './routes/upload.js';
+import adminRoutes from './routes/admin.js';
 
 dotenv.config();
 
@@ -22,5 +23,6 @@ app.use('/auth', authRoutes);
 app.use('/services', servicesRoutes);
 app.use('/bookings', bookingsRoutes);
 app.use('/upload', uploadRoutes);
+app.use('/admin', adminRoutes);
 
 export default app;
