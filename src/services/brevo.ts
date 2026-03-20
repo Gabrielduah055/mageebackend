@@ -1,11 +1,8 @@
-import https from 'https';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import brevo from '../config/brevo.js';
 
 export async function sendOtpEmail(toEmail: string, toName: string, otp: string): Promise<void> {
-  const payload = JSON.stringify({
-    sender: { name: 'Magee Salon', email: 'noreply@magee.com' },
+  await brevo.transactionalEmails.sendTransacEmail({
+    sender: { name: 'MageeBeautyPalour', email: 'gabrielagyemanduah@gmail.com' },
     to: [{ email: toEmail, name: toName }],
     subject: 'Your Magee Verification Code',
     htmlContent: `
@@ -50,36 +47,5 @@ export async function sendOtpEmail(toEmail: string, toName: string, otp: string)
         </body>
       </html>
     `,
-  });
-
-  const apiKey = process.env['BREVO_API_KEY'] ?? '';
-
-  await new Promise<void>((resolve, reject) => {
-    const req = https.request(
-      {
-        hostname: 'api.brevo.com',
-        path: '/v3/smtp/email',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'api-key': apiKey,
-          'Content-Length': Buffer.byteLength(payload),
-        },
-      },
-      (res) => {
-        let data = '';
-        res.on('data', (chunk) => { data += chunk; });
-        res.on('end', () => {
-          if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
-            resolve();
-          } else {
-            reject(new Error(`Brevo API error ${res.statusCode}: ${data}`));
-          }
-        });
-      }
-    );
-    req.on('error', reject);
-    req.write(payload);
-    req.end();
   });
 }
